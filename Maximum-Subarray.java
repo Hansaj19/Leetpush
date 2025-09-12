@@ -1,16 +1,32 @@
 class Solution {
-    public int maxSubArray(int[] nums) {
+    public int crossSum(int[]nums, int l, int m, int h){
+        int leftsum=Integer.MIN_VALUE;
+        int rightsum=Integer.MIN_VALUE;
         int sum=0;
-        int max=Integer.MIN_VALUE;
-        for(int i=0;i<nums.length;i++){
+        int n=nums.length;
+        for(int i=m; i>=l; i--){
             sum+=nums[i];
-            if(sum > max){
-                max=sum;
-            }
-            if(sum<0){
-                sum=0;
-            }
+            leftsum = Math.max(leftsum, sum);
         }
+        sum=0;
+        for(int i=m+1; i<=h; i++){
+            sum+=nums[i];
+            rightsum = Math.max(rightsum, sum);
+        }
+        // return Math.max(Math.max(leftsum,rightsum),leftsum+rightsum);
+        return leftsum + rightsum;
+    }
+    public int maxSum(int[]nums, int l, int h){
+        if(l==h) return nums[l];
+        int m = (l+h)/2;
+        int left = maxSum(nums,l,m);
+        int right = maxSum(nums,m+1,h);
+        int cross = crossSum(nums,l,m,h);
+        return Math.max(Math.max(left,right),cross);
+    }
+    public int maxSubArray(int[] nums) {
+        int n = nums.length;
+        int max = maxSum(nums,0,n-1);
         return max;
     }
 }
