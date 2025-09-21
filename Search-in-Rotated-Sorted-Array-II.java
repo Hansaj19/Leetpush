@@ -8,7 +8,7 @@ class Solution {
             if(nums[mid] == target){
                 return true;
             }
-            if (nums[left] == nums[mid] && nums[mid] == nums[right]) {
+            if (nums[left] == nums[mid] && nums[mid] == nums[right]) { //when all thre are equal, we shrink the boundaries
                 left++;
                 right--;
             }
