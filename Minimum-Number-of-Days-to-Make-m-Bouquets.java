@@ -1,18 +1,23 @@
 class Solution {
     public boolean isPossible(int[] bloomDay, int days, int m, int k){
         int n = bloomDay.length;
-        int flower=0,bouqet=0;
-        for(int i=0;i<n;i++){
-            if(bloomDay[i]<=days){
-                flower++;
+        int total = 0;
+        for (int i = 0; i < n; i++) {
+            int count = 0;
+            while (i < n && count < k && bloomDay[i] <= days) {
+                count++;
+                i++;
             }
-            else{
-                bouqet+=(flower/k);
-                flower=0;
+
+            if (count == k) {
+                total++;
+                i--;
+            }
+
+            if (total >= m) {
+                return true;
             }
         }
-        bouqet+=(flower/k);
-        if(bouqet>=m) return true;
         return false;
     }
     public int minDays(int[] bloomDay, int m, int k) {
